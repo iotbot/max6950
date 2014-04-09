@@ -8,9 +8,8 @@
 #include <MAX6950.h>
 #include <SPI.h> //it must be included
 
-char IP_buffer[20] = {'1','2','7','.','0','.','0','.','1','$'};
+char IP_buffer[50] = {'1','2','7','.','0','.','0','.','1','$'};
 int cnt_IP_buffer = 0;
-boolean stringCompelete = false;
 MAX6950 m;
 
 void setup() {
@@ -23,13 +22,13 @@ void setup() {
 
 void loop(){
   Serial.println(IP_buffer);
-  m.blink(true);
+  //m.blink(true);
   m.IP_display(IP_buffer);
-  cnt_IP_buffer = 0;
+  
   delay(1000);
   m.clearLED();
   delay(1000);
-  m.blink(false);
+  //m.blink(false);
   m.temp_hum_display(27,34);
 }
 
@@ -39,4 +38,6 @@ void serialEvent(){
     IP_buffer[cnt_IP_buffer] = inChar;
     cnt_IP_buffer++; 
    }
+   IP_buffer[cnt_IP_buffer] = '\o';
+   cnt_IP_buffer = 0;
 }
