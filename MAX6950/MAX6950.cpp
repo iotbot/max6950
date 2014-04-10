@@ -21,7 +21,7 @@
 const int slaveSelectPin = 10;
 
 //decode array 0~15 are digit and 16~31 are digit with dot
-uint8_t decode[32] = {0x7e,0x30,0x6d,0x79,0x33,0x5b,0x5f,0x70,0x7f,0x7b,0x77,0x1f,0x4e,0x3f,0x4f,0x47,
+extern uint8_t decode[32] = {0x7e,0x30,0x6d,0x79,0x33,0x5b,0x5f,0x70,0x7f,0x7b,0x77,0x1f,0x4e,0x3f,0x4f,0x47,
 0xfe,0xb0,0xed,0xf9,0xb3,0xdb,0xdf,0xf0,0xff,0xfb,0xf7,0x9f,0xce,0xbf,0xcf,0xc7};
 
 /////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ void MAX6950::IP_display(char* str)
 	scanlimit_reg(0x01);
 	set_digital(0x0,0x67);
 	set_digital(0x1,0x30);
-	delay(3000);
+	delay(1000);
 	scanlimit_reg(0x04);
 	
 	int cnt = 0;
@@ -157,7 +157,7 @@ void MAX6950::IP_display(char* str)
 	while(tmp[cnt1] != '$')
 	{
 		if(tmp[cnt1] == 0x2e)
-		str1[cnt-1] = str1[cnt-1] + 16;
+			str1[cnt-1] = str1[cnt-1] + 16;
 		else
 		{
 			str1[cnt] = tmp[cnt1] - '0';
@@ -188,27 +188,27 @@ void MAX6950::temp_hum_display(int temp,int hum)
 	set_digital(0x0,0x4f); //'E'
 	set_digital(0x1,0x46); //'T'
 	set_digital(0x2,0x40); //'T'
-	delay(3000);
+	delay(1000);
 	scanlimit_reg(0x04);
 	//display temperature
 	set_digital_decode(0x0,0x0c); //"C"
 	set_digital_decode(0x1,0x00);
 	set_digital_dot_decode(0x2,(temp % 10));
 	set_digital_decode(0x3,(temp / 10));
-	delay(3000);
+	delay(1000);
 	
 	//display "HU" on LEDs
 	scanlimit_reg(0x01);
 	set_digital(0x0,0x3e); //'U'
 	set_digital(0x1,0x37); //'H'
-	delay(3000);
+	delay(1000);
 	scanlimit_reg(0x04);
 	//display humidity
 	set_digital_decode(0x0,0x00);
 	set_digital_decode(0x1,0x00);
 	set_digital_dot_decode(0x2,(hum % 10));
 	set_digital_decode(0x3,(hum / 10));
-	delay(3000);
+	delay(1000);
 }
 
 /*

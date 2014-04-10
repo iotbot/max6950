@@ -31,7 +31,7 @@ public:
 	void set_digital_decode(uint8_t num, uint8_t value);
 	void set_digital_dot_decode(uint8_t num, uint8_t value);
 	void init(void);
-    void IP_display(char* str);
+	void IP_display(char* str);
 	void temp_hum_display(int temp, int hum);
 	void clearLED(void);
 	void blink(boolean value);
